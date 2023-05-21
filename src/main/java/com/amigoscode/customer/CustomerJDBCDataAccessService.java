@@ -23,14 +23,19 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
                 SELECT id, name, email, age
                 FROM customer;
                 """;
-
         return jdbcTemplate.query(sql, customerRowMapper);
-
     }
 
     @Override
     public Optional<Customer> selectCustomerById(Integer id) {
-        return Optional.empty();
+        var sql = """
+                SELECT id, name, email, age
+                FROM customer
+                WHERE id = ?
+                """;
+        return jdbcTemplate.query(sql, customerRowMapper, id)
+                .stream()
+                .findFirst();
     }
 
     @Override
@@ -52,7 +57,13 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
 
     @Override
     public boolean existPersonWithEmail(String email) {
-        return false;
+        var sql = """
+                SELECT count(id)
+                FROM customer
+                WHERE email = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
     }
 
     @Override
