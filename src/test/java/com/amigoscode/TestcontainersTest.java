@@ -1,5 +1,6 @@
 package com.amigoscode;
 
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -20,5 +21,16 @@ public class TestcontainersTest {
     void canStartPostgreSQLDB() {
         assertThat(postgreSQLContainer.isRunning()).isTrue();
         assertThat(postgreSQLContainer.isCreated()).isTrue();
+    }
+
+    @Test
+    void canApplyMigrateWithFlyway() {
+        Flyway flyway = Flyway.configure().dataSource(
+                postgreSQLContainer.getJdbcUrl(),
+                postgreSQLContainer.getUsername(),
+                postgreSQLContainer.getPassword())
+                .load();
+        flyway.migrate();
+        System.out.println();
     }
 }
