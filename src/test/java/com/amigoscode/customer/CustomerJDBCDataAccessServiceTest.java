@@ -162,10 +162,26 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
     @Test
     void deleteCustomerById() {
         //Given
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                21
+        );
+
+        Integer id = underTest.selectAllCustomers()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(Customer::getId)
+                .findFirst()
+                .orElseThrow();
 
         //When
+        underTest.deleteCustomerById(id);
 
         //Then
+        Optional<Customer> actual = underTest.selectCustomerById(id);
+        assertThat(actual).isNotPresent();
     }
 
     @Test
