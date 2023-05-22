@@ -260,6 +260,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
         Customer update = new Customer();
         update.setId(id);
         update.setEmail(newEmail);
+        underTest.updateCustomer(update);
 
         //Then
         Optional<Customer> actual = underTest.selectCustomerById(id);
