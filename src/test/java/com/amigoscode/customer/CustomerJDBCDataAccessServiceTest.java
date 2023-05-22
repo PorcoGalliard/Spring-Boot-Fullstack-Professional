@@ -339,4 +339,38 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
         Optional<Customer> actual = underTest.selectCustomerById(id);
         assertThat(actual).isPresent().hasValue(update);
     }
+
+    @Test
+    void willNotUpdateWhenNothingToUpdate() {
+        //Given
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                21
+        );
+
+        underTest.insertCustomer(customer);
+
+        Integer id = underTest.selectAllCustomers()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(Customer::getId)
+                .findFirst()
+                .orElseThrow();
+
+        //When
+        Customer update = new Customer();
+        update.setId(id);
+        underTest.updateCustomer(update);
+
+        //Then
+        Optional<Customer> actual = underTest.selectCustomerById(id);
+        assertThat(actual).isPresent().hasValueSatisfying(c -> {
+            assertThat(c.getId().equals(id));
+            assertThat(c.getName().equals(customer.getName()));
+            assertThat(c.getAge().equals(customer.getAge()));
+            assertThat(c.getEmail().equals(customer.getEmail()));
+        });
+    }
 }
