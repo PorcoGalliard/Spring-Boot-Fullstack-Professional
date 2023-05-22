@@ -1,6 +1,7 @@
 package com.amigoscode.customer;
 
 import com.amigoscode.AbstractTestcontainersUnitTest;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -193,5 +195,43 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
         //When
 
         //Then
+    }
+
+    @Test
+    void updateCustomerName() {
+        //Given
+        String email = FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID();
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                21
+        );
+
+        underTest.insertCustomer(customer);
+
+        Integer id = underTest.selectAllCustomers()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(Customer::getId)
+                .findFirst()
+                .orElseThrow();
+
+        var newName = "foo";
+
+        //When
+        Customer update = new Customer();
+        update.setId(id);
+        update.setName(newName);
+
+        underTest.updateCustomer(update);
+
+        //Then
+        Optional<Customer> actual = underTest.selectCustomerById(id);
+        assertThat(actual).isPresent().hasValueSatisfying(c -> {
+            assertThat(c.getId().equals(id));
+            assertThat(c.getName().equals(newName));
+            assertThat(c.getEmail().equals(customer.getEmail()));
+            assertThat(c.getAge().equals(customer.getAge()));
+        });
     }
 }
