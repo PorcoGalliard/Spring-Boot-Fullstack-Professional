@@ -87,29 +87,53 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
 
     @Test
     void insertCustomer() {
-        //Given
-
-        //When
-
-        //Then
     }
 
     @Test
     void existPersonWithEmail() {
         //Given
+        String email = FAKER.internet().safeEmailAddress() + " " + UUID.randomUUID();
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                21
+        );
+
+        underTest.insertCustomer(customer);
 
         //When
+        boolean actual = underTest.existPersonWithEmail(email);
 
         //Then
+        assertThat(actual).isTrue();
     }
+
+
 
     @Test
     void existPersonWithId() {
         //Given
+        String email = FAKER.internet().safeEmailAddress() + " " + UUID.randomUUID();
+        Customer customer = new Customer(
+                FAKER.name().fullName(),
+                email,
+                21
+        );
+
+        underTest.insertCustomer(customer);
+
+        Integer id = underTest.selectAllCustomers()
+                .stream()
+                .filter(c -> c.getEmail().equals(email))
+                .map(Customer::getId)
+                .findFirst()
+                .orElseThrow();
 
         //When
+        boolean actual = underTest.existPersonWithId(id);
 
         //Then
+        assertThat(actual).isTrue();
     }
 
     @Test
