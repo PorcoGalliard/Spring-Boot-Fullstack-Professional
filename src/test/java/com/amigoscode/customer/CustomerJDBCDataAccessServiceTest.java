@@ -319,6 +319,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
                 21
         );
 
+        underTest.insertCustomer(customer);
+
         Integer id = underTest.selectAllCustomers()
                 .stream()
                 .filter(c -> c.getEmail().equals(email))
@@ -330,7 +332,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
         Customer update = new Customer();
         update.setId(id);
         update.setName("Apollo Norm");
-        update.setEmail(FAKER.internet().safeEmailAddress() + "-" + UUID.randomUUID());
+        update.setEmail(UUID.randomUUID().toString());
         update.setAge(22);
 
         underTest.updateCustomer(update);
