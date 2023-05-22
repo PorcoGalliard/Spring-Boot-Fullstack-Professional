@@ -169,6 +169,8 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
                 21
         );
 
+        underTest.insertCustomer(customer);
+
         Integer id = underTest.selectAllCustomers()
                 .stream()
                 .filter(c -> c.getEmail().equals(email))
