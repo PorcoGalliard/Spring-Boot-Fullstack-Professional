@@ -148,6 +148,18 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
     }
 
     @Test
+    void existPersonWithIdReturnFalseWhenIdDoesNotExist() {
+        //Given
+        int id = -1;
+
+        //When
+        boolean actual = underTest.existPersonWithId(id);
+
+        //Then
+        assertThat(actual).isFalse();
+    }
+
+    @Test
     void deleteCustomerById() {
         //Given
 
