@@ -108,7 +108,18 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
         assertThat(actual).isTrue();
     }
 
+    @Test
+    void existPersonWithEmailReturnFalseWhenEmailDoesNotExist() {
+        //Given
+        String email = FAKER.internet().safeEmailAddress() + " " + UUID.randomUUID();
 
+        //When
+        boolean actual = underTest.existPersonWithEmail(email);
+
+        //Then
+        assertThat(actual).isFalse();
+
+    }
 
     @Test
     void existPersonWithId() {
