@@ -10,48 +10,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
-public class TestcontainersTest {
-
-    @Container
-    private static final PostgreSQLContainer<?> postgreSQLContainer =
-            new PostgreSQLContainer<>("postgres:latest")
-                    .withDatabaseName("amigoscode-dao-unit-test")
-                    .withUsername("amigoscode")
-                    .withPassword("password");
-
-    @DynamicPropertySource
-    private static void registerDataSourceProperties(DynamicPropertyRegistry registry) {
-        registry.add(
-                "spring.datasource.url",
-                postgreSQLContainer::getJdbcUrl
-        );
-
-        registry.add(
-                "spring.datasource.username",
-                postgreSQLContainer::getUsername
-        );
-
-        registry.add(
-                "spring.datasource.password",
-                postgreSQLContainer::getPassword
-        );
-    }
-
+public class TestcontainersTest extends AbstractTestcontainersUnitTest{
     @Test
     void canStartPostgreSQLDB() {
         assertThat(postgreSQLContainer.isRunning()).isTrue();
         assertThat(postgreSQLContainer.isCreated()).isTrue();
     }
 
-    @Test
-    void canApplyMigrateWithFlyway() {
-        Flyway flyway = Flyway.configure().dataSource(
-                postgreSQLContainer.getJdbcUrl(),
-                postgreSQLContainer.getUsername(),
-                postgreSQLContainer.getPassword())
-                .load();
-        flyway.migrate();
-        System.out.println();
-    }
 }
