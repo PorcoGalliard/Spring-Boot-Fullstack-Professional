@@ -1,5 +1,6 @@
 package com.amigoscode.customer;
 
+import com.amigoscode.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,6 +41,7 @@ class CustomerServiceTest {
         //Given
         int id = 10;
         Customer customer = new Customer(
+                id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
                 30
@@ -50,6 +53,20 @@ class CustomerServiceTest {
 
         //Then
         assertThat(actual).isEqualTo(customer);
+    }
+
+    @Test
+    void willReturnEmptyWhenIdNotFound() {
+        //Given
+        int id = 10;
+
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.empty());
+
+        //When
+        //Then
+        assertThatThrownBy(() -> underTest.getCustomer(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Customer with id = [%s] not found".formatted(id));
     }
 
     @Test
