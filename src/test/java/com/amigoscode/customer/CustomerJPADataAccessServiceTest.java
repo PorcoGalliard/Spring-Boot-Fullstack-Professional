@@ -41,10 +41,14 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void selectCustomerById() {
         //Given
+        int id = 1;
 
         //When
+        underTest.selectCustomerById(id);
 
         //Then
+        Mockito.verify(customerRepository)
+                .findById(id);
     }
 
     @Test
