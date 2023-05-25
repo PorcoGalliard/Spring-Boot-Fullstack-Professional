@@ -1,11 +1,14 @@
 package com.amigoscode.customer;
 
+import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,19 +57,22 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void insertCustomer() {
         //Given
+        Customer customer = new Customer(
+                "Ali",
+                "aliexpress@amigoscode.com",
+                21
+        );
 
         //When
+        underTest.insertCustomer(customer);
 
         //Then
+        Mockito.verify(customerRepository)
+                .save(customer);
     }
 
     @Test
     void deleteCustomerById() {
-        //Given
-
-        //When
-
-        //Then
     }
 
     @Test
