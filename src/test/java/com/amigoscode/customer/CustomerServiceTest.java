@@ -56,7 +56,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    void willReturnEmptyWhenIdNotFound() {
+    void willReturnThrownOptionalWhenIdNotFound() {
         //Given
         int id = 10;
 
