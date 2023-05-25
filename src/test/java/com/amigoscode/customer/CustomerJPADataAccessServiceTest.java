@@ -73,6 +73,15 @@ class CustomerJPADataAccessServiceTest {
 
     @Test
     void deleteCustomerById() {
+        //Given
+        int id = 1;
+
+        //When
+        underTest.deleteCustomerById(id);
+
+        //Then
+        Mockito.verify(customerRepository)
+                .deleteById(id);
     }
 
     @Test
