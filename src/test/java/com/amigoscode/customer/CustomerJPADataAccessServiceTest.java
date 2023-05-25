@@ -87,10 +87,18 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void updateCustomer() {
         //Given
+        Customer customer = new Customer(
+                "Yamato",
+                "yamatomusashi@japan.com",
+                41
+        );
 
         //When
+        underTest.updateCustomer(customer);
 
         //Then
+        Mockito.verify(customerRepository)
+                .save(customer);
     }
 
     @Test
