@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,21 +19,23 @@ class CustomerJPADataAccessServiceTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new CustomerJPADataAccessService(customerRepository);
         autoCloseable = MockitoAnnotations.openMocks(this);
+        underTest = new CustomerJPADataAccessService(customerRepository);
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws Exception {
+        autoCloseable.close();
     }
 
     @Test
     void selectAllCustomers() {
-        //Given
-
         //When
+        underTest.selectAllCustomers();
 
         //Then
+        Mockito.verify(customerRepository)
+                .findAll();
     }
 
     @Test
