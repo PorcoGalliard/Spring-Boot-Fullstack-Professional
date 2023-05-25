@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository("jpa")
-public class CustomerJPADataAccessService implements CustomerDao{
+public class CustomerJPADataAccessService implements CustomerDao {
 
     private final CustomerRepository customerRepository;
 
