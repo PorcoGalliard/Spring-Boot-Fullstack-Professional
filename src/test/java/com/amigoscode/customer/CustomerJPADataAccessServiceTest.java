@@ -100,9 +100,13 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void existPersonWithId() {
         //Given
+        int id = 1;
 
         //When
+        underTest.existPersonWithId(id);
 
         //Then
+        Mockito.verify(customerRepository)
+                .existsCustomerById(id);
     }
 }
