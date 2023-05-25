@@ -7,6 +7,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,10 +37,19 @@ class CustomerServiceTest {
     @Test
     void getCustomer() {
         //Given
+        int id = 10;
+        Customer customer = new Customer(
+                "Apollo Norm",
+                "apollonorm@uncf.com",
+                30
+        );
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         //When
+        Customer actual = underTest.getCustomer(id);
 
         //Then
+        assertThat(actual).isEqualTo(customer);
     }
 
     @Test
