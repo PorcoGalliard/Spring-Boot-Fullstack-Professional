@@ -87,10 +87,14 @@ class CustomerJPADataAccessServiceTest {
     @Test
     void existPersonWithEmail() {
         //Given
+        String email = "amigoscodelearning@amigoscode.com";
 
         //When
+        underTest.existPersonWithEmail(email);
 
         //Then
+        Mockito.verify(customerRepository)
+                .existsCustomerByEmail(email);
     }
 
     @Test
