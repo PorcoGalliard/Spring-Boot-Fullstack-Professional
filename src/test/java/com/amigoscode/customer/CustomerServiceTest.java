@@ -4,6 +4,7 @@ import com.amigoscode.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -72,10 +73,31 @@ class CustomerServiceTest {
     @Test
     void addCustomer() {
         //Given
+        String email = "apollonorm@uncf.com";
+
+        Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(false);
+
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(
+                "Apollo Norm", email, 21
+        );
 
         //When
+        underTest.addCustomer(request);
 
         //Then
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(
+                Customer.class
+        );
+
+        Mockito.verify(customerDao).insertCustomer(customerArgumentCaptor.capture());
+
+        Customer capturedValue = customerArgumentCaptor.getValue();
+
+        assertThat(capturedValue.getId()).isNull();
+        assertThat(capturedValue.getName()).isEqualTo(request.name());
+        assertThat(capturedValue.getEmail()).isEqualTo(email);
+        assertThat(capturedValue.getAge()).isEqualTo(request.age());
+
     }
 
     @Test
