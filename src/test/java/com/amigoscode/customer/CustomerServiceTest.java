@@ -251,4 +251,35 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getAge()).isEqualTo(customer.getAge());
         assertThat(capturedCustomer.getEmail()).isEqualTo(email);
     }
+
+    @Test
+    void canUpdateOnlyCustomerAge() {
+        //Given
+        int id  = 10;
+
+        Customer customer = new Customer(
+                id,
+                "Apollo Norm",
+                "apollonorm@uncf.com",
+                30
+        );
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 21);
+
+        //When
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(
+                Customer.class
+        );
+
+        underTest.updateCustomer(id, updateRequest);
+
+        //Then
+        Mockito.verify(customerDao).updateCustomer(customerArgumentCaptor.capture());
+        Customer capturedCustomer = customerArgumentCaptor.getValue();
+
+        assertThat(capturedCustomer.getName()).isEqualTo(customer.getName());
+        assertThat(capturedCustomer.getAge()).isEqualTo(updateRequest.age());
+        assertThat(capturedCustomer.getEmail()).isEqualTo(customer.getEmail());
+    }
 }
