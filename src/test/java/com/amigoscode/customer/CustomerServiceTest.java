@@ -282,4 +282,33 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getAge()).isEqualTo(updateRequest.age());
         assertThat(capturedCustomer.getEmail()).isEqualTo(customer.getEmail());
     }
+
+    @Test
+    void wilThrownWhenTryingToUpdateCustomerEmailWhenAlreadyTaken() {
+        //Given
+        int id  = 10;
+        String email = "antares@uncf.com";
+
+        Customer customer = new Customer(
+                id,
+                "Apollo Norm",
+                "apollonorm@uncf.com",
+                30
+        );
+
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, email, null);
+
+        Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(true);
+
+        //When
+        assertThatThrownBy(() -> underTest.updateCustomer(id, updateRequest))
+                .isInstanceOf(DuplicateResourceException.class)
+                        .hasMessage("email already taken");
+
+        //Then
+        Mockito.verify(customerDao, Mockito.never()).updateCustomer(any());
+
+    }
 }
