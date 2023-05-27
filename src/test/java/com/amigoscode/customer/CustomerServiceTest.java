@@ -127,10 +127,15 @@ class CustomerServiceTest {
     @Test
     void deleteCustomerById() {
         //Given
+        int id = 1;
+
+        Mockito.when(customerDao.existPersonWithId(id)).thenReturn(true);
 
         //When
+        underTest.deleteCustomerById(id);
 
         //Then
+        Mockito.verify(customerDao).deleteCustomerById(id);
     }
 
     @Test
