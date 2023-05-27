@@ -1,5 +1,6 @@
 package com.amigoscode.customer;
 
+import com.amigoscode.exception.DuplicateResourceException;
 import com.amigoscode.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -98,6 +100,28 @@ class CustomerServiceTest {
         assertThat(capturedValue.getEmail()).isEqualTo(email);
         assertThat(capturedValue.getAge()).isEqualTo(request.age());
 
+    }
+
+    @Test
+    void willThrownWhenEmailAlreadyExistWhileAddingCustomer() {
+        //Given
+        String email = "apollonorm@uncf.com";
+
+        Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(true);
+
+        CustomerRegistrationRequest request = new CustomerRegistrationRequest(
+                "Apollo Norm",
+                email,
+                21
+        );
+
+        //When
+        assertThatThrownBy(() -> underTest.addCustomer(request))
+                .isInstanceOf(DuplicateResourceException.class)
+                        .hasMessage("email already taken");
+
+        //Then
+        Mockito.verify(customerDao, Mockito.never()).insertCustomer(any());
     }
 
     @Test
