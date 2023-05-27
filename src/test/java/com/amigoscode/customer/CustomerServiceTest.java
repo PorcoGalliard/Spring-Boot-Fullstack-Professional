@@ -134,6 +134,22 @@ class CustomerServiceTest {
     }
 
     @Test
+    void cannotDeleteCustomerByIdWhenIdDoesntExist() {
+        //Given
+        int id = 1;
+
+        Mockito.when(customerDao.existPersonWithId(id)).thenReturn(false);
+
+        //When
+        assertThatThrownBy(() -> underTest.deleteCustomerById(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage(String.format("Customer with id [%d] not found", id));
+
+        //Then
+        Mockito.verify(customerDao, Mockito.never()).deleteCustomerById(id);
+    }
+
+    @Test
     void updateCustomer() {
         //Given
 
