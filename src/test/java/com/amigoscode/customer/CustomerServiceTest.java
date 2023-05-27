@@ -155,11 +155,67 @@ class CustomerServiceTest {
     }
 
     @Test
-    void updateCustomer() {
+    void canUpdateAllCustomersProperties() {
         //Given
+        int id  = 10;
+        String email = "antares@uncf.com";
+
+        Customer customer = new Customer(
+                id,
+                "Apollo Norm",
+                "apollonorm@uncf.com",
+                30
+        );
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Antares", email, 22);
+
+        Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(false);
 
         //When
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(
+                Customer.class
+        );
+
+        underTest.updateCustomer(id, updateRequest);
 
         //Then
+        Mockito.verify(customerDao).updateCustomer(customerArgumentCaptor.capture());
+        Customer capturedCustomer = customerArgumentCaptor.getValue();
+
+        assertThat(capturedCustomer.getName()).isEqualTo(updateRequest.name());
+        assertThat(capturedCustomer.getAge()).isEqualTo(updateRequest.age());
+        assertThat(capturedCustomer.getEmail()).isEqualTo(updateRequest.email());
+    }
+
+    @Test
+    void canUpdateOnlyCustomerName() {
+        //Given
+        int id  = 10;
+
+        Customer customer = new Customer(
+                id,
+                "Apollo Norm",
+                "apollonorm@uncf.com",
+                30
+        );
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Antares", null, null);
+
+        //When
+        ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(
+                Customer.class
+        );
+
+        underTest.updateCustomer(id, updateRequest);
+
+        //Then
+        Mockito.verify(customerDao).updateCustomer(customerArgumentCaptor.capture());
+        Customer capturedCustomer = customerArgumentCaptor.getValue();
+
+        assertThat(capturedCustomer.getName()).isEqualTo(updateRequest.name());
+        assertThat(capturedCustomer.getAge()).isEqualTo(customer.getAge());
+        assertThat(capturedCustomer.getEmail()).isEqualTo(customer.getEmail());
     }
 }
