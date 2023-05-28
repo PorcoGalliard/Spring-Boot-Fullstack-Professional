@@ -30,8 +30,6 @@ public class CustomerIntegrationTest {
 
     @Test
     void canRegisterACustomer() {
-        //Given
-
         // Create Registration request
         Faker faker = new Faker();
         Name fakerName = faker.name();
@@ -73,7 +71,7 @@ public class CustomerIntegrationTest {
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
                 .contains(expectedCustomer);
 
-        var id = allCustomers.stream()
+        int id = allCustomers.stream()
                         .filter(customer -> customer.getEmail().equals(email))
                         .map(Customer::getId)
                         .findFirst()
@@ -84,7 +82,7 @@ public class CustomerIntegrationTest {
         // Get customer by id
 
         webTestClient.get()
-                .uri(CUSTOMER_URI)
+                .uri(CUSTOMER_URI + "/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus()
