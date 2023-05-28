@@ -73,5 +73,25 @@ public class CustomerIntegrationTest {
         assertThat(allCustomers).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
                 .contains(expectedCustomer);
 
+        var id = allCustomers.stream()
+                        .filter(customer -> customer.getEmail().equals(email))
+                        .map(Customer::getId)
+                        .findFirst()
+                        .orElseThrow();
+
+        expectedCustomer.setId(id);
+
+        // Get customer by id
+
+        webTestClient.get()
+                .uri(CUSTOMER_URI)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody(new ParameterizedTypeReference<Customer>() {
+                })
+                .isEqualTo(expectedCustomer);
+
     }
 }
