@@ -9,13 +9,20 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.amigoscode</groupId>
-    <artifactId>Spring-Boot-FullStack-Professional</artifactId>
+    <artifactId>spring-boot-fullstack-professional</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <organization>
+        <name>ultrasur</name>
+        <url>https://ultrasur.com</url>
+    </organization>
+
     <name>demo</name>
     <description>demo</description>
     <properties>
         <java.version>17</java.version>
+        <docker.username>ultrasur</docker.username>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -155,6 +162,24 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.2</version>
+                <configuration>
+                    <from>
+                        <image>oracle/openjdk:17</image>
+                    </from>
+                    <to>
+                        <image>docker.io/${project.organization.name}/${project.artifactId}:${project.version}</image>
+                        <tags>
+                            <tag>latest</tag>
+                        </tags>
+                    </to>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
