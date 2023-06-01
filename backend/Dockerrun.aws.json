@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "amigoscode-api",
+      "image": "ultrasur/spring-boot-fullstack-professional:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8080
+        }
+      ],
+      "environmet": [
+        {
+          "name":"SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://Empty:5432/customer"
+        }
+      ]
+    }
+  ]
+}
