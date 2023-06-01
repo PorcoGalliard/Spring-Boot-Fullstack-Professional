@@ -15,7 +15,7 @@
       "environmet": [
         {
           "name":"SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://TODO:5432/customer"
+          "value": "jdbc:postgresql://Empty:5432/customer"
         }
       ]
     }
