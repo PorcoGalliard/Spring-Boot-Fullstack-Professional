@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "amigoscode-api",
-      "image": "ultrasur/spring-boot-fullstack-professional:latest",
+      "image": "amigoscode/amigoscode-api:latest",
       "essential": true,
       "memory": 512,
       "portMappings": [
@@ -12,10 +12,10 @@
           "containerPort": 8080
         }
       ],
-      "environmet": [
+      "environment": [
         {
           "name":"SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://Empty:5432/customer"
+          "value": "jdbc:postgresql://awseb-e-hru47dsvrn-stack-awsebrdsdatabase-eaiwweeia3cm.cdobwqzlmcor.ap-southeast-1.rds.amazonaws.com:5432/customer"
         }
       ]
     }
