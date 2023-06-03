@@ -21,8 +21,8 @@ jobs:
           - 5332:5432
         options: >-
           --health-cmd pg_isready
-          --health_interval 10s
-          --health_timeout 5s
+          --health-interval 10s
+          --health-timeout 5s
           --health-retries 5
 
     defaults:
