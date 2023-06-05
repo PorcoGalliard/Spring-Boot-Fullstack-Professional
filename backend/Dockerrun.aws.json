@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "amigoscode-api",
+      "name": "ultimate-api",
       "image": "ultrasur/spring-boot-fullstack-professional:latest",
       "essential": true,
       "memory": 512,
