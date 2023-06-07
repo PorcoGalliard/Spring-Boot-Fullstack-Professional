@@ -2,7 +2,7 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "ultrasur-springboot",
+      "name": "ultrasur-spring",
       "image": "ultrasur/spring-boot-fullstack-professional:latest",
       "essential": true,
       "memory": 512,
