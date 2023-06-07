@@ -29,7 +29,7 @@ public class CustomerService {
     public void addCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         String email = customerRegistrationRequest.email();
         if (customerDao.existPersonWithEmail(email)) {
-            throw new DuplicateResourceException("email already taken".formatted(email));
+            throw new DuplicateResourceException("email already taken");
         }
         Customer customer = new Customer(customerRegistrationRequest.name(), customerRegistrationRequest.email(), customerRegistrationRequest.age()
         );
@@ -63,7 +63,7 @@ public class CustomerService {
             changes = true;
         }
 
-        if (updateRequest.age() != null && !updateRequest.age().equals(customer.getName())) {
+        if (updateRequest.age() != null && !updateRequest.age().equals(customer.getAge())) {
             customer.setAge(updateRequest.age());
             changes = true;
         }
