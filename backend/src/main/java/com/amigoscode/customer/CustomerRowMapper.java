@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class CustomerRowMapper implements RowMapper {
+public class CustomerRowMapper implements RowMapper<Customer> {
 
     @Override
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new Customer(
                 rs.getInt("id"),
                 rs.getString("name"),
