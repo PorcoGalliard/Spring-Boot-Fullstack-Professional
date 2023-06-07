@@ -15,7 +15,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
@@ -312,25 +311,25 @@ class CustomerServiceTest {
         Mockito.verify(customerDao, Mockito.never()).updateCustomer(any());
     }
 
-//    @Test
-//    void wilThrownWhenNoChangesProperties() {
-//        //Given
-//        int id  = 10;
-//        Customer customer = new Customer(
-//                id, "Apollo Norm", "apollonorm@uncf.com", 30
-//        );
-//
-//        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
-//
-//        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-//                customer.getName(), customer.getEmail(), customer.getAge());
-//
-//        //When
-//        assertThatThrownBy(() -> underTest.updateCustomer(id, updateRequest))
-//                .isInstanceOf(RequestValidationException.class)
-//                        .hasMessage("no data changes found");
-//
-//        //Then
-//        Mockito.verify(customerDao, Mockito.never()).updateCustomer(any());
-//    }
+    @Test
+    void wilThrownWhenNoChangesProperties() {
+        //Given
+        int id  = 10;
+        Customer customer = new Customer(
+                id, "Apollo Norm", "apollonorm@uncf.com", 30
+        );
+
+        Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
+
+        CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
+                customer.getName(), customer.getEmail(), customer.getAge());
+
+        //When
+        assertThatThrownBy(() -> underTest.updateCustomer(id, updateRequest))
+                .isInstanceOf(RequestValidationException.class)
+                        .hasMessage("no data changes found");
+
+        //Then
+        Mockito.verify(customerDao, Mockito.never()).updateCustomer(any());
+    }
 }
