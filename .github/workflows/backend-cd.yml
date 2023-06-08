@@ -28,7 +28,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: /backend
+        working-directory: ../backend
 
     steps:
       - name: Send Slack Message
