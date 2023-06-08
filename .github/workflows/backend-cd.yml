@@ -33,9 +33,9 @@ jobs:
     steps:
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":"Deployment started :progress_bar: :fingerscrossed:"}
+            {"text":"Deployment started :progress_bar: :fingerscrossed:"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - uses: actions/checkout@v3
@@ -54,18 +54,18 @@ jobs:
         run: echo "BUILD_NUMBER=$(date '+%d.%m.%Y.%H.%M.%S')" >> $GITHUB_OUTPUT
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":":maven: Building with Maven"}
+            {"text":":maven: Building with Maven"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":"docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/ultrasur/spring-boot-fullstack-professional"}
+            {"text":"docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/ultrasur/spring-boot-fullstack-professional"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
@@ -77,9 +77,9 @@ jobs:
           cat Dockerrun.aws.json
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":":aws: Starting deployment to Elastic Beanstalk"}
+            {"text":":aws: Starting deployment to Elastic Beanstalk"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Deploy to Elastic Beanstalk
@@ -95,9 +95,9 @@ jobs:
           deployment_package: backend/Dockerrun.aws.json
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":":githubloading: Committing to repo https://github.com/PorcoGalliard/Spring-Boot-Fullstack-Professional"}
+            {"text":":githubloading: Committing to repo https://github.com/PorcoGalliard/Spring-Boot-Fullstack-Professional"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
@@ -109,16 +109,16 @@ jobs:
           git push origin master
       - name: Send Slack Message
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":"Deployment and Committing is Completed :party_blob:"}
+            {"text":"Deployment and Committing is Completed :party_blob:"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         if: always()
         run: >
-          curl -X POST -H 'Content-type: application/json'
+          curl && curl -X POST -H 'Content-type: application/json'
           --data '
-          {"text":"Job Status ${{ job.status }}"}
+            {"text":"Job Status ${{ job.status }}"}
           '
           ${{ secrets.SLACK_WEBHOOK_URL }}
