@@ -57,11 +57,11 @@ jobs:
 #          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with Maven
         run: mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
-      - name: Send Slack Message
-        run: >
-          curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":":docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/ultrasur/spring-boot-fullstack-professional"}' 
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+#      - name: Send Slack Message
+#        run: >
+#          curl -X POST -H 'Content-type: application/json'
+#          --data '{"text":":docker: Image tag:${{steps.build-number.outputs.BUILD_NUMBER}} pushed to https://hub.docker.com/repository/docker/ultrasur/spring-boot-fullstack-professional"}'
+#          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
         run: |
           echo "Dockerrun.aws.json before updating tag"
@@ -91,6 +91,8 @@ jobs:
 #          --data '{"text":":githubloading: Committing to repo https://github.com/PorcoGalliard/spring-boot-fullstack-professional/"}'
 #          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
