@@ -91,8 +91,6 @@ jobs:
           --data '{"text":":githubloading: Committing to repo https://github.com/PorcoGalliard/spring-boot-fullstack-professional/"}'
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Commit and push Dockerrun.aws.json
-        env:
-          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
