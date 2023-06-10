@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import UserProfile from "./UserProfile.jsx";
+import { useState } from "react";
 
+const users = [
+    {
+        name: "Jamila",
+        age: 22,
+        gender: "FEMALE",
+    },
+    {
+        name: "Alfian",
+        age: 23,
+        gender: "FEMALE",
+    },
+    {
+        name: "Antonio",
+        age: 25,
+        gender: "MALE",
+    },
+    {
+        name: "Marc",
+        age: 26,
+        gender: "MALE",
+    },
+    {
+        name: "Blossom",
+        age: 27,
+        gender: "FEMALE",
+    },
+]
+
+const UserProfiles = ( {users} ) => (
+    <div>
+        { users.map((user, index) => (
+            <UserProfile
+                key={index}
+                name={user.name}
+                age={user.age}
+                gender={user.gender}
+                tagNumber={index}
+            />
+        ))}
+    </div>
+)
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Amigoscode</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const [counter, setCounter] = useState(0);
+
+    return (
+        <div>
+            <button onClick={() => setCounter(prevCounter => prevCounter + 1)}>
+                Increment Button
+            </button>
+            <h1>{counter}</h1>
+            <UserProfiles users={users}/>
+        </div>
+    )
 }
 
 export default App
