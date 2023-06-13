@@ -1,4 +1,4 @@
-import {Button, Spinner, Text} from "@chakra-ui/react";
+import {Wrap, WrapItem, Spinner, Text} from "@chakra-ui/react";
 import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import {useEffect, useState} from "react";
 import {getCustomers} from "./services/client.js";
@@ -44,9 +44,13 @@ const App = () => {
 
     return (
         <SidebarWithHeader>
+            <Wrap spacing={'30px'} justify={'center'}>
             {customers.map((customer, index) => (
+                <WrapItem>
                 <CardWithImage/>
+                </WrapItem>
             ))}
+            </Wrap>
         </SidebarWithHeader>
     )
 }
