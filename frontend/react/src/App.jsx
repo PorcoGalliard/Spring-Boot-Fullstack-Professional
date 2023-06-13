@@ -1,75 +1,54 @@
-import UserProfile from "./UserProfile.jsx";
+import {Button, Spinner, Text} from "@chakra-ui/react";
+import SidebarWithHeader from "./components/shared/SideBar.jsx";
 import {useEffect, useState} from "react";
+import {getCustomers} from "./services/client.js";
+import CardWithImage from "./components/Card.jsx";
 
-const users = [
-    {
-        name: "Jamila",
-        age: 22,
-        gender: "FEMALE",
-    },
-    {
-        name: "Alfian",
-        age: 23,
-        gender: "FEMALE",
-    },
-    {
-        name: "Antonio",
-        age: 25,
-        gender: "MALE",
-    },
-    {
-        name: "Marc",
-        age: 26,
-        gender: "MALE",
-    },
-    {
-        name: "Blossom",
-        age: 27,
-        gender: "FEMALE",
-    },
-]
+const App = () => {
 
-const UserProfiles = ( {users} ) => (
-    <div>
-        { users.map((user, index) => (
-            <UserProfile
-                key={index}
-                name={user.name}
-                age={user.age}
-                gender={user.gender}
-                tagNumber={index}
-            />
-        ))}
-    </div>
-)
-function App() {
-
-    const [counter, setCounter] = useState(0);
-    const [isLoading, setIsLoading] = useState(false);
+    const [customers, setCustomers] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            setIsLoading(false)
-        }, 4000)
-        return () => {
-            console.log("cleanup functions")
-        }
-    }, [])
+        setLoading(true);
+        getCustomers().then(res => {
+            setCustomers(res.data);
+        }).catch(err => {
+            console.log(err)
+        }).finally(() => {
+            setLoading(false);
+        })
+    }, []);
 
-    if (isLoading) {
-        return "Loading..."
+    if (loading) {
+        return (
+            <SidebarWithHeader>
+            <Spinner
+                thickness='4px'
+                speed='0.65s'
+                emptyColor='gray.200'
+                color='blue.500'
+                size='xl'
+            />
+            </SidebarWithHeader>
+        )
+    }
+
+    if (customers.length <= 0) {
+        return (
+            <SidebarWithHeader>
+                <Text>No customers available</Text>
+            </SidebarWithHeader>
+        )
     }
 
     return (
-        <div>
-            <button onClick={() => setCounter(prevCounter => prevCounter + 1)}>
-                Increment Button
-            </button>
-            <h1>{counter}</h1>
-            <UserProfiles users={users}/>
-        </div>
+        <SidebarWithHeader>
+            {customers.map((customer, index) => (
+                <CardWithImage/>
+            ))}
+        </SidebarWithHeader>
     )
 }
 
-export default App
+export default App;
