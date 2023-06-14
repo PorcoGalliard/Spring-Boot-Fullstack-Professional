@@ -1,16 +1,11 @@
 package com.amigoscode.customer;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerJPADataAccessServiceTest {
 
@@ -60,8 +55,8 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "Ali",
                 "aliexpress@amigoscode.com",
-                21
-        );
+                21,
+                Gender.MALE);
 
         //When
         underTest.insertCustomer(customer);
@@ -90,8 +85,8 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "Yamato",
                 "yamatomusashi@japan.com",
-                41
-        );
+                41,
+                Gender.MALE);
 
         //When
         underTest.updateCustomer(customer);

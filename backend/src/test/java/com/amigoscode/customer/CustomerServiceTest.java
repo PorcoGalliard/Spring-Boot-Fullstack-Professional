@@ -47,8 +47,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         //When
@@ -80,7 +80,7 @@ class CustomerServiceTest {
         Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Apollo Norm", email, 21
+                "Apollo Norm", email, 21, Gender.MALE
         );
 
         //When
@@ -99,6 +99,7 @@ class CustomerServiceTest {
         assertThat(capturedValue.getName()).isEqualTo(request.name());
         assertThat(capturedValue.getEmail()).isEqualTo(email);
         assertThat(capturedValue.getAge()).isEqualTo(request.age());
+        assertThat(capturedValue.getGender()).isEqualTo(request.gender());
 
     }
 
@@ -112,7 +113,8 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 "Apollo Norm",
                 email,
-                21
+                21,
+                Gender.MALE
         );
 
         //When
@@ -164,8 +166,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Antares", email, 22);
@@ -197,8 +199,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest("Antares", null, null);
@@ -230,8 +232,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, email, null);
@@ -261,8 +263,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(null, null, 21);
@@ -293,8 +295,8 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30
-        );
+                30,
+                Gender.MALE);
 
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -316,8 +318,8 @@ class CustomerServiceTest {
         //Given
         int id  = 10;
         Customer customer = new Customer(
-                id, "Apollo Norm", "apollonorm@uncf.com", 30
-        );
+                id, "Apollo Norm", "apollonorm@uncf.com", 30,
+                Gender.MALE);
 
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 

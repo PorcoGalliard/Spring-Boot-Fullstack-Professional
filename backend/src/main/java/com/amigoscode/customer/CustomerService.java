@@ -31,8 +31,8 @@ public class CustomerService {
         if (customerDao.existPersonWithEmail(email)) {
             throw new DuplicateResourceException("email already taken");
         }
-        Customer customer = new Customer(customerRegistrationRequest.name(), customerRegistrationRequest.email(), customerRegistrationRequest.age()
-        );
+        Customer customer = new Customer(customerRegistrationRequest.name(), customerRegistrationRequest.email(), customerRegistrationRequest.age(),
+                customerRegistrationRequest.gender());
         customerDao.insertCustomer(customer);
     }
 
