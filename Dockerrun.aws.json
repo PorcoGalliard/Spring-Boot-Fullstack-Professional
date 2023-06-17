@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "ultrasur-react",
-      "image": "ultrasur/ultrasur-springboot-professional-react:latest",
+      "image": "ultrasur/ultrasur-react:latest",
       "essential": true,
       "memory": 256,
       "portMappings": [
