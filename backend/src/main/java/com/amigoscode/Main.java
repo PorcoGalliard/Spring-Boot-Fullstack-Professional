@@ -28,7 +28,7 @@ public class Main {
             Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
             Customer customer = new Customer(
                     firstName + " " + lastName,
-                    firstName + "." + lastName + "@amigoscode.com",
+                    firstName + "." + lastName + "@uncf.com",
                     age,
                     gender);
 
