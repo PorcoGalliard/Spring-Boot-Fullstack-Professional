@@ -29,7 +29,7 @@ services:
 
   ultrasur-frontend-react:
     container_name: ultrasur-react
-    image: ultrasur/ultrasur-springboot-professional-react
+    image: ultrasur/ultrasur-react
     build:
 #      where to find Dockerfile
       context: frontend/react
