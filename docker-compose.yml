@@ -27,6 +27,20 @@ services:
       - db
     restart: unless-stopped
 
+  ultrasur-frontend-react:
+    container_name: ultrasur-react
+    image: ultrasur/ultrasur-springboot-professional-react
+    build:
+#      where to find Dockerfile
+      context: frontend/react
+      args:
+        api_base_url: http://localhost:8088
+    ports:
+      - "3000:5173"
+    depends_on:
+      - ultrasur-springboot
+    restart: unless-stopped
+
 networks:
   db:
     driver: bridge
