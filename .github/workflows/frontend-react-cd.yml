@@ -46,7 +46,7 @@ jobs:
           USERNAME=ultrasur \
           REPO=ultrasur-super-react \
           TAG=${{ steps.build-number.outputs.BUILD_NUMBER }} \ 
-          ../../.ci/build.publish.sh . \
+          ../../.ci/build-publish.sh . \
             --build-arg api_base_url=http://devastation.ap-southeast-1.elasticbeanstalk.com:8080
 
       - name: Send Slack Message
