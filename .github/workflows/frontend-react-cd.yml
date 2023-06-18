@@ -1,7 +1,7 @@
 name: CD - Deploy React Frontend
 
 on:
-  workflow-dispatch:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -59,7 +59,7 @@ jobs:
         run: |
           echo "Dockerrun.aws.json before updating tag"
           cat ../../Dockerrun.aws.json
-          sed -i -E 's_(ultrasur/ultrasur-super-react:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' ../Dockerrun.aws.json
+          sed -i -E 's_(ultrasur/ultrasur-super-react:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' ../../Dockerrun.aws.json
           echo "Dockerrun.aws.json after updating tag"
           cat ../../Dockerrun.aws.json
 
