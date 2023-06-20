@@ -1,5 +1,6 @@
 package com.amigoscode.jwt;
 
+import com.amigoscode.customer.CustomerUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
-    public JWTAuthenticationFilter(JWTUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JWTAuthenticationFilter(JWTUtil jwtUtil, CustomerUserDetailService userDetailsService) {
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
     }
