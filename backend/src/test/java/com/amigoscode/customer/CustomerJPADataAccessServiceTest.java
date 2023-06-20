@@ -55,7 +55,7 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "Ali",
                 "aliexpress@amigoscode.com",
-                21,
+                "password", 21,
                 Gender.MALE);
 
         //When
@@ -85,7 +85,7 @@ class CustomerJPADataAccessServiceTest {
         Customer customer = new Customer(
                 "Yamato",
                 "yamatomusashi@japan.com",
-                41,
+                "password", 41,
                 Gender.MALE);
 
         //When

@@ -10,6 +10,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -22,11 +23,14 @@ class CustomerServiceTest {
 
     @Mock
     private CustomerDao customerDao;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     private CustomerService underTest;
+    private final CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
 
     @BeforeEach
     void setUp() {
-        underTest = new CustomerService(customerDao);
+        underTest = new CustomerService(customerDao, customerDTOMapper, passwordEncoder);
     }
 
     @Test
@@ -47,15 +51,17 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
+        CustomerDTO expected = customerDTOMapper.apply(customer);
+
         //When
-        Customer actual = underTest.getCustomer(id);
+        CustomerDTO actual = underTest.getCustomer(id);
 
         //Then
-        assertThat(actual).isEqualTo(customer);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -80,8 +86,12 @@ class CustomerServiceTest {
         Mockito.when(customerDao.existPersonWithEmail(email)).thenReturn(false);
 
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                "Apollo Norm", email, 21, Gender.MALE
+                "Apollo Norm", email, "password", 21, Gender.MALE
         );
+
+        String passwordHash = "@@#35262621636@T@@";
+
+        Mockito.when(passwordEncoder.encode(request.password())).thenReturn(passwordHash);
 
         //When
         underTest.addCustomer(request);
@@ -100,6 +110,7 @@ class CustomerServiceTest {
         assertThat(capturedValue.getEmail()).isEqualTo(email);
         assertThat(capturedValue.getAge()).isEqualTo(request.age());
         assertThat(capturedValue.getGender()).isEqualTo(request.gender());
+        assertThat(capturedValue.getPassword()).isEqualTo(passwordHash);
 
     }
 
@@ -113,7 +124,7 @@ class CustomerServiceTest {
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
                 "Apollo Norm",
                 email,
-                21,
+                "password", 21,
                 Gender.MALE
         );
 
@@ -166,7 +177,7 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -199,7 +210,7 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -232,7 +243,7 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -263,7 +274,7 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
 
@@ -295,7 +306,7 @@ class CustomerServiceTest {
                 id,
                 "Apollo Norm",
                 "apollonorm@uncf.com",
-                30,
+                "password", 30,
                 Gender.MALE);
 
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
@@ -318,7 +329,7 @@ class CustomerServiceTest {
         //Given
         int id  = 10;
         Customer customer = new Customer(
-                id, "Apollo Norm", "apollonorm@uncf.com", 30,
+                id, "Apollo Norm", "apollonorm@uncf.com", "password", 30,
                 Gender.MALE);
 
         Mockito.when(customerDao.selectCustomerById(id)).thenReturn(Optional.of(customer));
