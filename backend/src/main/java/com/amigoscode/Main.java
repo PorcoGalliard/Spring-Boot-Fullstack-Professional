@@ -28,14 +28,16 @@ public class Main {
             String lastName = faker.name().lastName().toLowerCase();
             int age = random.nextInt(16, 99);
             Gender gender = age % 2 == 0 ? Gender.MALE : Gender.FEMALE;
+            String email = firstName + "." + lastName + "@uncf.com";
+
             Customer customer = new Customer(
                     firstName + " " + lastName,
-                    firstName + "." + lastName + "@uncf.com",
-                    passwordEncoder.encode(UUID.randomUUID().toString()),
+                    email,
+                    passwordEncoder.encode("password"),
                     age,
                     gender);
-
             customerRepository.save(customer);
+            System.out.println(email);
         };
     }
 }
