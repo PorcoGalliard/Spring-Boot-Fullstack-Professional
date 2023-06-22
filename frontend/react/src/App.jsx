@@ -12,7 +12,7 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [err, setError] = useState("");
 
-    const fetchCustomers = () => {
+    const fetchCustomers = (token) => {
         setLoading(true);
         getCustomers().then(res => {
             setCustomers(res.data);

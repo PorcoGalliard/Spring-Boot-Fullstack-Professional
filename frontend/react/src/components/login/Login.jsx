@@ -121,6 +121,9 @@ const Login = () => {
                     />
                     <Heading fontSize={'2xl'} mb={15}>Sign in to your account</Heading>
                     <LoginForm />
+                    <Link color={"blue.500"} href={"/signup"}>
+                        Don't have an account? Signup now.
+                    </Link>
                 </Stack>
             </Flex>
             <Flex flex={1}
@@ -138,7 +141,7 @@ const Login = () => {
                     alt={'Login Image'}
                     objectFit={'scale-down'}
                     src={
-                        'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/arsenal-fc-wallpaper-sidik-wahid.jpg'
+                        'https://vitejs.dev/logo-with-shadow.png'
                     }
                 />
             </Flex>
