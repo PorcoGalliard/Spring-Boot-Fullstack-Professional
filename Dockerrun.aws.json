@@ -8,26 +8,14 @@
       "memory": 512,
       "portMappings": [
         {
-          "hostPort": 8080,
+          "hostPort": 80,
           "containerPort": 8080
         }
       ],
       "environment": [
         {
           "name":"SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-uenptixji7-stack-awsebrdsdatabase-y50ndzc84thl.cdobwqzlmcor.ap-southeast-1.rds.amazonaws.com:5432/customer"
-        }
-      ]
-    },
-    {
-      "name": "ultrasur-react",
-      "image": "ultrasur/ultrasur-super-react:21.06.2023.23.40.55",
-      "essential": true,
-      "memory": 256,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 5173
+          "value": "jdbc:postgresql://awseb-e-aiihmpmngv-stack-awsebrdsdatabase-56m4xazcdb5c.cdobwqzlmcor.ap-southeast-1.rds.amazonaws.com:5432/ebdb"
         }
       ]
     }

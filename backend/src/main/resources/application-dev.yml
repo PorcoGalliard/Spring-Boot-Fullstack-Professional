@@ -16,7 +16,7 @@ management:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5332/customer
+    url: jdbc:postgresql://awseb-e-aiihmpmngv-stack-awsebrdsdatabase-56m4xazcdb5c.cdobwqzlmcor.ap-southeast-1.rds.amazonaws.com:5432/ebdb
     username: amigoscode
     password: password
   jpa:
