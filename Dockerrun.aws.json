@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "ultrasur-springboot",
-      "image": "ultrasur/spring-boot-fullstack-professional:20.06.2023.21.05.58",
+      "image": "ultrasur/spring-boot-fullstack-professional:22.06.2023.13.41.37",
       "essential": true,
       "memory": 512,
       "portMappings": [
