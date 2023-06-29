@@ -21,7 +21,7 @@
     },
     {
       "name": "ultrasur-react",
-      "image": "ultrasur/ultrasur-super-react:22.06.2023.08.16.41",
+      "image": "ultrasur/ultrasur-super-react:29.06.2023.14.55.11",
       "essential": true,
       "memory": 256,
       "portMappings": [
