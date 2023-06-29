@@ -44,7 +44,7 @@ const Signup = () => {
             >
                 <Text fontSize={"6xl"} color={'white'} fontWeight={"bold"} mb={5}>
                     <Link href={"https://amigoscode.com/courses"}>
-                    Vite
+                    Apollo Norm
                     </Link>
                 </Text>
                 <Image
